@@ -7,17 +7,17 @@ if [ "$url" = ""  ]; then
   exit 1
 fi
 
-accept="text/plain,text/html;q=0.9,application/xhtml+xml;q=0.9,application/xml;q=0.8,*/*;q=0.7"
+accept="'Accept: text/plain,text/html;q=0.9,application/xhtml+xml;q=0.9,application/xml;q=0.8,*/*;q=0.7'"
 pipeline=
 
 if [ "$2" = "-p" ]; then
   pipeline="-s `dirname $0`/pipeline.lua -- 16"
   connections=$3
 elif [ "$2" = "-j" ]; then
-  accept="application/json,text/html;q=0.9,application/xhtml+xml;q=0.9,application/xml;q=0.8,*/*;q=0.7"
+  accept="'Accept: application/json,text/html;q=0.9,application/xhtml+xml;q=0.9,application/xml;q=0.8,*/*;q=0.7'"
   connections=$3
 elif [ "$2" = "-h" ]; then
-  accept="text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+  accept="'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'"
   connections=$3
 else
   connections=$2
@@ -32,7 +32,7 @@ set -x
 
 wrk \
   -H 'Host: localhost' \
-  -H 'Accept: '$accept \
+  -H $accept \
   -H 'Connection: keep-alive' \
   --latency \
   -d 15 \
