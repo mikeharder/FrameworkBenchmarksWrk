@@ -32,7 +32,7 @@ set -x
 
 wrk \
   -H 'Host: localhost' \
-  -H 'Accept: $accept' \
+  -H 'Accept: '$accept \
   -H 'Connection: keep-alive' \
   --latency \
   -d 15 \
