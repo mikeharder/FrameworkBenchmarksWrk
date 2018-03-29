@@ -1,6 +1,7 @@
 #!/bin/sh
 
 url=$1
+host="`sed -E -e 's_.*://([^/@]*@)?([^/:]+).*_\2_' <<< $url`"
 
 if [ "$url" = ""  ]; then
   echo "wrk.sh url [-p] [-j] [-h] [connections]"
@@ -31,7 +32,7 @@ fi
 set -x
 
 wrk \
-  -H 'Host: localhost' \
+  -H 'Host: '$host \
   -H 'Accept: '$accept \
   -H 'Connection: keep-alive' \
   --latency \
